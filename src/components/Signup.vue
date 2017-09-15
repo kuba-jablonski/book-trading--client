@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Server from '@/axios'
+
 export default {
   data () {
     return {
@@ -69,8 +71,17 @@ export default {
     }
   },
   methods: {
-    signUp () {
-      // !!!
+    async signUp () {
+      try {
+        const res = await Server.post('/users/signup', {
+          username: this.username,
+          password: this.password
+        })
+        console.log(res.headers)
+        console.log(res.config.headers)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
