@@ -8,32 +8,22 @@
       clipped
     >
       <v-list>
-        <v-list-tile to="/" active-class="">
+        <v-list-tile
+          v-for="item in bookItems"
+          :key="item.title"
+          :to="item.path"
+          exact
+          ripple
+        >
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Browse Books</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/books/me" active-class="">
-          <v-list-tile-action>
-            <v-icon>library_books</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>My Books</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/books/add" active-class="">
-          <v-list-tile-action>
-            <v-icon>library_add</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Add a Book</v-list-tile-title>
-          </v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>          
         </v-list-tile>
         <v-divider></v-divider>
-        <v-list-tile to="/user/login" active-class="">
+        <!-- <v-list-tile to="/user/login" active-class="">
           <v-list-tile-action>
             <v-icon>forward</v-icon>
           </v-list-tile-action>
@@ -48,6 +38,20 @@
           <v-list-tile-content>
             <v-list-tile-title>Sign Up</v-list-tile-title>
           </v-list-tile-content>
+        </v-list-tile> -->
+        <v-list-tile
+          v-for="item in userItems"
+          :key="item.title"
+          :to="item.path"
+          exact
+          ripple
+        >
+          <v-list-tile-action>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+          </v-list-tile-content>          
         </v-list-tile>
         <v-list-tile @click="logOut">
           <v-list-tile-action>
@@ -78,7 +82,16 @@
   export default {
     data () {
       return {
-        drawer: true
+        drawer: true,
+        bookItems: [
+          { title: 'Browse Books', path: '/', icon: 'home' },
+          { title: 'My Books', path: '/books/me', icon: 'library_books' },
+          { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
+        ],
+        userItems: [
+          { title: 'Log In', path: '/user/login', icon: 'forward' },
+          { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
+        ]
       }
     },
     methods: {
