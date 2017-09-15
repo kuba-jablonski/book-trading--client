@@ -13,7 +13,6 @@
           :key="item.title"
           :to="item.path"
           exact
-          ripple
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -44,7 +43,6 @@
           :key="item.title"
           :to="item.path"
           exact
-          ripple
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
