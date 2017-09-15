@@ -3,7 +3,6 @@
     <v-navigation-drawer
       persistent
       v-model="drawer"
-      light
       enable-resize-watcher
       absolute
       clipped
@@ -60,7 +59,7 @@
         </v-list-tile>           
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar class="indigo" dark fixed>
+    <v-toolbar class="primary" dark fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Book Trading Club</v-toolbar-title>
     </v-toolbar>
@@ -69,7 +68,7 @@
         <router-view></router-view>
       </v-container>
     </main>
-    <v-footer class="indigo">
+    <v-footer class="primary">
       <span class="white--text">© 2017</span>
     </v-footer>
   </v-app>
