@@ -39,7 +39,7 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>          
         </v-list-tile>
-        <v-list-tile @click="logOut">
+        <v-list-tile v-if="authenticated" @click="logOut">
           <v-list-tile-action>
             <v-icon>arrow_back</v-icon>
           </v-list-tile-action>
@@ -70,16 +70,31 @@ import server from '@/axios'
 export default {
   data () {
     return {
-      drawer: true,
-      bookItems: [
-        { title: 'Browse Books', path: '/', icon: 'home' },
-        { title: 'My Books', path: '/books/me', icon: 'library_books' },
-        { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
-      ],
-      userItems: [
-        { title: 'Log In', path: '/user/login', icon: 'forward' },
-        { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
-      ]
+      drawer: true
+    }
+  },
+  computed: {
+    authenticated () {
+      return this.$store.getters.authenticated
+    },
+    bookItems () {
+      let bookItems = [{ title: 'Browse Books', path: '/', icon: 'home' }]
+      if (this.authenticated) {
+        bookItems = [
+          { title: 'Browse Books', path: '/', icon: 'home', visible: true },
+          { title: 'My Books', path: '/books/me', icon: 'library_books' },
+          { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
+        ]
+      }
+      return bookItems
+    },
+    userItems () {
+      if (!this.authenticated) {
+        return [
+          { title: 'Log In', path: '/user/login', icon: 'forward' },
+          { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
+        ]
+      }
     }
   },
   methods: {
