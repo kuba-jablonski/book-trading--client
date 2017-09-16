@@ -13,6 +13,8 @@
           :key="item.title"
           :to="item.path"
           exact
+          ripple
+          active-class=""
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -22,27 +24,13 @@
           </v-list-tile-content>          
         </v-list-tile>
         <v-divider></v-divider>
-        <!-- <v-list-tile to="/user/login" active-class="">
-          <v-list-tile-action>
-            <v-icon>forward</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Log In</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile to="/user/signup" active-class="">
-          <v-list-tile-action>
-            <v-icon>person_add</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Sign Up</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile> -->
         <v-list-tile
           v-for="item in userItems"
           :key="item.title"
           :to="item.path"
           exact
+          ripple
+          active-class=""
         >
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
