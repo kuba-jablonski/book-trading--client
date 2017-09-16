@@ -36,23 +36,32 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn block primary large class="mt-4" type="submit">
+                  <v-btn block primary large class="mt-4" type="submit" :loading="loading">
                     Log in
-                    <span slot="loader" class="custom-loader">
-                      <v-icon light>cached</v-icon>
-                    </span>
                   </v-btn>
                 </v-flex>
               </v-layout>
             </v-form>
           </v-container>
         </v-card-text>
+        <v-snackbar
+          :timeout="5000"
+          top
+          right
+          error
+          v-model="error"
+        >
+          Wrong username or password!
+          <v-btn dark flat @click.native="error = false">Close</v-btn>
+        </v-snackbar>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import server from '@/axios'
+
 export default {
   data () {
     return {
@@ -66,12 +75,30 @@ export default {
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) => v.length >= 6 || 'Password must be at least 6 characters long'
-      ]
+      ],
+      loading: false,
+      error: false
     }
   },
   methods: {
-    logIn () {
-      // !!!
+    async logIn () {
+      try {
+        this.loading = true
+
+        const response = await server.post('/users/login', {
+          username: this.username,
+          password: this.password
+        })
+        this.$store.commit('setUser', response.data)
+        this.$store.commit('setUser', response.data)
+        server.defaults.headers.common['Authorization'] = response.headers.authorization
+
+        this.loading = false
+        this.$router.push('/')
+      } catch (error) {
+        this.loading = false
+        this.error = true
+      }
     }
   }
 }

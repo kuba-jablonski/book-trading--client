@@ -65,25 +65,28 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        drawer: true,
-        bookItems: [
-          { title: 'Browse Books', path: '/', icon: 'home' },
-          { title: 'My Books', path: '/books/me', icon: 'library_books' },
-          { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
-        ],
-        userItems: [
-          { title: 'Log In', path: '/user/login', icon: 'forward' },
-          { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
-        ]
-      }
-    },
-    methods: {
-      logOut () {
-        // !!!
-      }
+import server from '@/axios'
+
+export default {
+  data () {
+    return {
+      drawer: true,
+      bookItems: [
+        { title: 'Browse Books', path: '/', icon: 'home' },
+        { title: 'My Books', path: '/books/me', icon: 'library_books' },
+        { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
+      ],
+      userItems: [
+        { title: 'Log In', path: '/user/login', icon: 'forward' },
+        { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
+      ]
+    }
+  },
+  methods: {
+    logOut () {
+      this.$store.commit('setUser', null)
+      server.defaults.headers.common['Authorization'] = null
     }
   }
+}
 </script>
