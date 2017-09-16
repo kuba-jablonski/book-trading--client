@@ -52,6 +52,8 @@
     <v-toolbar class="primary" dark fixed>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Book Trading Club</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <p v-if="authenticated" class="mb-0">Logged in as {{ username }}.</p>
     </v-toolbar>
     <main>
       <v-container fluid>
@@ -95,6 +97,9 @@ export default {
           { title: 'Sign Up', path: '/user/signup', icon: 'person_add' }
         ]
       }
+    },
+    username () {
+      return this.$store.getters.username
     }
   },
   methods: {
