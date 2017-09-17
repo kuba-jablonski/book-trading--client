@@ -36,7 +36,15 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn block primary large class="mt-4" type="submit" :loading="loading">
+                  <v-btn
+                    block
+                    primary
+                    large
+                    class="mt-4"
+                    type="submit"
+                    :loading="loading"
+                    :disabled="!valid"
+                  >
                     Log in
                   </v-btn>
                 </v-flex>
