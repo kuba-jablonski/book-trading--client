@@ -84,12 +84,12 @@ export default {
       try {
         this.loading = true
 
-        const response = await server.post('/users/signup', {
+        const { data: user, headers } = await server.post('/users/signup', {
           username: this.username,
           password: this.password
         })
-        this.$store.commit('setUser', response.data)
-        server.defaults.headers.common['Authorization'] = response.headers.authorization
+        this.$store.commit('setUser', user)
+        server.defaults.headers.common['Authorization'] = headers.authorization
 
         this.loading = false
         this.$router.push('/')
