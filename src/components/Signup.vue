@@ -35,7 +35,7 @@
               </v-layout>
               <v-layout row>
                 <v-flex xs12>
-                  <v-btn block primary large class="mt-4" type="submit" :loading="loading">
+                  <v-btn block primary large class="mt-4" type="submit" :loading="loading" :disabled="!valid">
                     Sign up
                   </v-btn>
                 </v-flex>
@@ -50,7 +50,7 @@
           error
           v-model="error"
         >
-          This user already exists.
+          {{ errorMessage }}
           <v-btn dark flat @click.native="error = false">Close</v-btn>
         </v-snackbar>
       </v-card>
@@ -76,7 +76,8 @@ export default {
         (v) => v.length >= 6 || 'Password must be at least 6 characters long'
       ],
       loading: false,
-      error: false
+      error: false,
+      errorMessage: ''
     }
   },
   methods: {
@@ -94,8 +95,14 @@ export default {
         this.loading = false
         this.$router.push('/')
       } catch (error) {
+        console.log(error.response)
         this.loading = false
         this.error = true
+        if (error.response && (error.response.data.code === 11000)) {
+          this.errorMessage = 'This username already exists.'
+        } else {
+          this.errorMessage = 'Something went wrong.'
+        }
       }
     }
   }
