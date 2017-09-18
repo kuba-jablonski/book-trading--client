@@ -4,7 +4,6 @@
       persistent
       v-model="drawer"
       enable-resize-watcher
-      absolute
       clipped
     >
       <v-list>
