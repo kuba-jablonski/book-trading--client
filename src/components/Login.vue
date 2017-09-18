@@ -98,7 +98,7 @@ export default {
           password: this.password
         })
         this.$store.commit('setUser', user)
-        server.defaults.headers.common['Authorization'] = headers.authorization
+        this.$store.commit('setAuthToken', headers.authorization)
 
         this.loading = false
         this.$router.push('/')

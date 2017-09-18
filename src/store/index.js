@@ -5,11 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user: null
+    user: null,
+    authToken: null
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
+    },
+    setAuthToken (state, payload) {
+      state.authToken = payload
     }
   },
   getters: {

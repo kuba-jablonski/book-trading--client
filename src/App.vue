@@ -62,8 +62,6 @@
 </template>
 
 <script>
-import server from '@/axios'
-
 export default {
   data () {
     return {
@@ -100,7 +98,7 @@ export default {
   methods: {
     logOut () {
       this.$store.commit('setUser', null)
-      server.defaults.headers.common['Authorization'] = null
+      this.$store.commit('setAuthToken', null)
     }
   }
 }
