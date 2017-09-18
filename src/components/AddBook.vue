@@ -7,7 +7,7 @@
           prepend-icon="search"
           solo
           v-model="searchKeyword"
-          @keydown.enter="getBooks"
+          @keydown="getBooks"
         ></v-text-field>
       </v-flex>
     </v-layout>
@@ -56,6 +56,7 @@
 
 <script>
 import axios from 'axios'
+import { debounce } from 'lodash'
 
 export default {
   data () {
@@ -72,14 +73,16 @@ export default {
     }
   },
   methods: {
-    async getBooks () {
+    getBooks: debounce(async function () {
       try {
-        const { data: { items } } = await axios.get(`${this.APIURL}&q=${this.searchKeyword}`)
-        this.books = items
+        if (this.searchKeyword.length > 2) {
+          const { data: { items } } = await axios.get(`${this.APIURL}&q=${this.searchKeyword}`)
+          this.books = items
+        }
       } catch (error) {
         console.log(error)
       }
-    },
+    }, 300),
     pickBook (i) {
       this.pickedBook = { info: this.books[i], index: i }
       this.dialog = true
