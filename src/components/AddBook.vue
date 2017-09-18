@@ -6,9 +6,11 @@
           label="Search for a book"
           prepend-icon="search"
           solo
+          autofocus
           v-model="searchKeyword"
           @keydown="getBooks"
         ></v-text-field>
+        <v-progress-linear v-if="loading" height="2" class="mt-0 mb-0" indeterminate></v-progress-linear>
       </v-flex>
     </v-layout>
     <v-layout row v-if="books.length > 0">
@@ -42,7 +44,7 @@
       </v-dialog>
     </v-layout>
     <v-snackbar
-      :timeout="5000"
+      :timeout="3000"
       class="mt-1"
       top
       success
@@ -63,26 +65,29 @@ export default {
     return {
       searchKeyword: '',
       books: [],
-      APIURL: 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyBbI3lL95nvzfZ6SV3IBQcKOJR2fVdH0sk',
+      APIURL: 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyBbI3lL95nvzfZ6SV3IBQcKOJR2fVdH0sk&langRestrict=en&q=',
       dialog: false,
       pickedBook: {
         info: null,
         index: null
       },
-      bookSaved: false
+      bookSaved: false,
+      loading: false
     }
   },
   methods: {
     getBooks: debounce(async function () {
       try {
         if (this.searchKeyword.length > 2) {
-          const { data: { items } } = await axios.get(`${this.APIURL}&q=${this.searchKeyword}`)
+          this.loading = true
+          const { data: { items } } = await axios.get(`${this.APIURL}${this.searchKeyword}`)
           this.books = items
+          this.loading = false
         }
       } catch (error) {
         console.log(error)
       }
-    }, 300),
+    }, 500),
     pickBook (i) {
       this.pickedBook = { info: this.books[i], index: i }
       this.dialog = true
