@@ -15,13 +15,13 @@
       <v-flex sm6 offset-sm3>
         <v-list>
           <v-list-tile
-            @click="openDialog(i)"
+            @click="pickBook(i)"
             v-for="(book, i) in books"
             :key="book.title"
           >
             <v-list-tile-content>
               <v-list-tile-title>{{ book.volumeInfo.title }}</v-list-tile-title>
-              <v-list-tile-sub-title>{{ book.volumeInfo.authors[0] }}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>{{ getAuthor(book) }}</v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon class="white--text">add_circle</v-icon>
@@ -35,12 +35,22 @@
         <v-card v-if="pickedBook.info">
           <v-card-title class="headline">Add "{{ pickedBook.info.volumeInfo.title }}" to your collection?</v-card-title>
           <v-card-actions>
-            <v-btn class="green--text darken-1" flat="flat" @click.native="dialog = false">Yes</v-btn>
+            <v-btn class="green--text darken-1" flat="flat" @click.native="saveBook">Yes</v-btn>
             <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
-          </v-card-actions>
+          </v-card-actions>         
         </v-card>
       </v-dialog>
     </v-layout>
+    <v-snackbar
+      :timeout="5000"
+      class="mt-1"
+      top
+      success
+      v-model="bookSaved"
+    >
+      Book was added to your collection.
+      <v-btn dark flat @click.native="bookSaved = false">Close</v-btn>
+    </v-snackbar> 
   </div>
 </template>
 
@@ -57,7 +67,8 @@ export default {
       pickedBook: {
         info: null,
         index: null
-      }
+      },
+      bookSaved: false
     }
   },
   methods: {
@@ -69,9 +80,18 @@ export default {
         console.log(error)
       }
     },
-    openDialog (i) {
+    pickBook (i) {
       this.pickedBook = { info: this.books[i], index: i }
       this.dialog = true
+    },
+    saveBook () {
+      // !!! Reach out to DB
+      // Store book in vuex
+      this.dialog = false
+      this.bookSaved = true
+    },
+    getAuthor (book) {
+      return book.volumeInfo.authors ? book.volumeInfo.authors[0] : 'Unknown'
     }
   }
 }
