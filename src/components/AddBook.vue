@@ -58,6 +58,7 @@
 
 <script>
 import axios from 'axios'
+import server from '@/axios'
 import { debounce } from 'lodash'
 
 export default {
@@ -92,9 +93,26 @@ export default {
       this.pickedBook = { info: this.books[i], index: i }
       this.dialog = true
     },
-    saveBook () {
-      // !!! Reach out to DB
-      // Store book in vuex
+    async saveBook () {
+      const pickedBook = this.pickedBook.info
+
+      const bookToSave = {
+        title: pickedBook.volumeInfo.title,
+        author: this.getAuthor(pickedBook),
+        image: pickedBook.volumeInfo.imageLinks.thumbnail
+      }
+
+      const { data: book } = await server({
+        method: 'post',
+        url: '/books/add',
+        headers: { 'Authorization': this.$store.state.authToken },
+        data: bookToSave
+      })
+
+      this.$store.commit('addBook', book)
+
+      this.books.splice(this.pickedBook.index, 1)
+
       this.dialog = false
       this.bookSaved = true
     },
