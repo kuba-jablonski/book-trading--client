@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: null,
-    authToken: null
+    authToken: null,
+    books: []
   },
   mutations: {
     setUser (state, payload) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     setAuthToken (state, payload) {
       state.authToken = payload
+    },
+    addBook (state, payload) {
+      state.books.unshift(payload)
     }
   },
   getters: {
