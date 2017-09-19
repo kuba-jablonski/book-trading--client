@@ -5,16 +5,23 @@ import Login from '@/components/Login'
 import Signup from '@/components/Signup'
 import AddBook from '@/components/AddBook'
 import MyBooks from '@/components/MyBooks'
+import store from '@/store'
 
 Vue.use(Router)
 
-export default new Router({
+function authGuard (to, from, next) {
+  store.getters.authenticated
+    ? next()
+    : router.push('/')
+}
+
+export const router = new Router({
   routes: [
     { path: '/', component: Home },
     { path: '/user/login', component: Login },
     { path: '/user/signup', component: Signup },
-    { path: '/books/add', component: AddBook },
-    { path: '/books/me', component: MyBooks }
+    { path: '/books/add', component: AddBook, beforeEnter: authGuard },
+    { path: '/books/me', component: MyBooks, beforeEnter: authGuard }
   ],
   mode: 'history'
 })

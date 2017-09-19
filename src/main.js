@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import './stylus/main.styl'
 import App from './App'
-import router from './router'
+import { router } from './router'
 import store from './store'
 
 Vue.use(Vuetify)
