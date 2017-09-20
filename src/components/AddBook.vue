@@ -37,7 +37,7 @@
         <v-card v-if="pickedBook.info">
           <v-card-title class="headline">Add "{{ pickedBook.info.volumeInfo.title }}" to your collection?</v-card-title>
           <v-card-actions>
-            <v-btn class="green--text darken-1" flat="flat" @click.native="saveBook">Yes</v-btn>
+            <v-btn class="green--text darken-1" :loading="saveInProgress" flat="flat" @click.native="saveBook">Yes</v-btn>
             <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
           </v-card-actions>         
         </v-card>
@@ -73,7 +73,8 @@ export default {
         index: null
       },
       bookSaved: false,
-      loading: false
+      loading: false,
+      saveInProgress: false
     }
   },
   methods: {
@@ -94,6 +95,7 @@ export default {
       this.dialog = true
     },
     async saveBook () {
+      this.saveInProgress = true
       const pickedBook = this.pickedBook.info
 
       const bookToSave = {
@@ -113,6 +115,7 @@ export default {
 
       this.books.splice(this.pickedBook.index, 1)
 
+      this.saveInProgress = false
       this.dialog = false
       this.bookSaved = true
     },

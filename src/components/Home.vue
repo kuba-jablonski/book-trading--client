@@ -10,7 +10,7 @@
           v-model="searchKeyword"
         ></v-text-field>
       </v-flex>
-    </v-layout> 
+    </v-layout>
     <v-layout>
       <v-flex wrap class="text-xs-center">
         <img
