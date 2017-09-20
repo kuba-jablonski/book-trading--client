@@ -62,6 +62,8 @@
 </template>
 
 <script>
+import server from '@/axios'
+
 export default {
   data () {
     return {
@@ -99,6 +101,14 @@ export default {
     logOut () {
       this.$store.commit('setUser', null)
       this.$store.commit('setAuthToken', null)
+    }
+  },
+  async mounted () {
+    try {
+      const books = await server.get('/books/all')
+      this.$store.commit('setBooks', books)
+    } catch (error) {
+      console.log(error)
     }
   }
 }

@@ -18,6 +18,9 @@ export default new Vuex.Store({
     },
     addBook (state, payload) {
       state.books.unshift(payload)
+    },
+    setBooks (state, payload) {
+      state.books = payload
     }
   },
   getters: {
