@@ -28,7 +28,7 @@ export default new Vuex.Store({
       if (state.user) return state.user.username
     },
     uid (state) {
-      if (state.user) return state.user.uid
+      if (state.user) return state.user._id
     },
     authenticated (state) {
       return !!state.user

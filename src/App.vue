@@ -105,7 +105,7 @@ export default {
   },
   async mounted () {
     try {
-      const books = await server.get('/books/all')
+      const { data: { books } } = await server.get('/books/all')
       this.$store.commit('setBooks', books)
     } catch (error) {
       console.log(error)
