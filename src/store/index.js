@@ -21,6 +21,9 @@ export default new Vuex.Store({
     },
     setBooks (state, payload) {
       state.books = payload
+    },
+    removeBook (state, { _id }) {
+      state.books = state.books.filter(book => book._id !== _id)
     }
   },
   getters: {
@@ -32,6 +35,11 @@ export default new Vuex.Store({
     },
     authenticated (state) {
       return !!state.user
+    },
+    userBooks (state) {
+      if (state.user) {
+        return state.books.filter(book => book.owner === state.user._id)
+      }
     }
   }
 })
