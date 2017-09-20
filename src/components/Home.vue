@@ -15,7 +15,7 @@
       <v-flex wrap class="text-xs-center">
         <img
           style="cursor: pointer"
-          @click="borrowBook(book)"
+          @click="openBorrowDialog(book)"
           v-for="book in filteredBooks"
           :key="book.title"
           :src="book.image"
@@ -24,6 +24,25 @@
         >
       </v-flex>
     </v-layout>
+    <v-snackbar
+      :timeout="5000"
+      top
+      :error="snackbar.context === 'error'"
+      v-model="snackbar.active"
+      class="mt-2"
+    >
+      {{ snackbar.message }}
+      <v-btn dark flat @click.native="snackbar.active = false">Close</v-btn>
+    </v-snackbar>
+    <v-dialog v-model="dialog" persistent width="500px">
+      <v-card v-if="pickedBook">
+        <v-card-title class="headline">Request to borrow "{{ pickedBook.title }}" ?</v-card-title>
+        <v-card-actions>
+          <v-btn class="green--text darken-1" flat="flat" @click.native="borrowBook">Yes</v-btn>
+          <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
+        </v-card-actions>         
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -31,7 +50,14 @@
 export default {
   data () {
     return {
-      searchKeyword: ''
+      searchKeyword: '',
+      snackbar: {
+        active: false,
+        context: '',
+        message: ''
+      },
+      dialog: false,
+      pickedBook: null
     }
   },
   computed: {
@@ -57,8 +83,18 @@ export default {
     }
   },
   methods: {
-    borrowBook (book) {
-      console.log(book)
+    openBorrowDialog (book) {
+      if (!this.authenticated) {
+        this.snackbar.context = 'error'
+        this.snackbar.message = 'You must be logged in.'
+        this.snackbar.active = true
+        return
+      }
+      this.pickedBook = book
+      this.dialog = true
+    },
+    borrowBook () {
+      // !!!
     }
   }
 }
