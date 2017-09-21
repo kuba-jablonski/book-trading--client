@@ -55,7 +55,6 @@
         <v-snackbar
           :timeout="5000"
           top
-          right
           error
           v-model="error"
         >
@@ -68,8 +67,6 @@
 </template>
 
 <script>
-import server from '@/axios'
-
 export default {
   data () {
     return {
@@ -93,12 +90,10 @@ export default {
       try {
         this.loading = true
 
-        const { data: user, headers } = await server.post('/users/login', {
+        await this.$store.dispatch('logIn', {
           username: this.username,
           password: this.password
         })
-        this.$store.commit('setUser', user)
-        this.$store.commit('setAuthToken', headers.authorization)
 
         this.loading = false
         this.$router.push('/')

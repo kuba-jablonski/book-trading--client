@@ -1,3 +1,5 @@
+import server from '@/axios'
+
 export default {
   state: {
     username: null,
@@ -11,6 +13,13 @@ export default {
     },
     setAuthToken: (state, payload) => {
       state.authToken = payload
+    }
+  },
+  actions: {
+    logIn: async ({ commit }, payload) => {
+      const { data: user, headers } = await server.post('/users/login', payload)
+      commit('setUser', user)
+      commit('setAuthToken', headers.authorization)
     }
   },
   getters: {

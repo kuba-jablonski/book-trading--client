@@ -46,7 +46,11 @@ export default {
     appNavigation: Navigation
   },
   mounted () {
-    this.$store.dispatch('fetchBooks')
+    try {
+      this.$store.dispatch('fetchBooks')
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 </script>

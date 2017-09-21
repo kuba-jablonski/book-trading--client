@@ -17,12 +17,8 @@ export default {
   },
   actions: {
     fetchBooks: async ({ commit }) => {
-      try {
-        const { data: { books } } = await server.get('/books/all')
-        commit('setBooks', books)
-      } catch (error) {
-        console.log(error)
-      }
+      const { data: { books } } = await server.get('/books/all')
+      commit('setBooks', books)
     }
   },
   getters: {
