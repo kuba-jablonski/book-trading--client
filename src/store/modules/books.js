@@ -30,6 +30,7 @@ export default {
     }
   },
   getters: {
+    allBooks: state => state.books,
     userBooks: (state, getters) =>
       state.books.filter(book => book.owner === getters.uid)
   }

@@ -24,16 +24,6 @@
         >
       </v-flex>
     </v-layout>
-    <v-snackbar
-      :timeout="5000"
-      top
-      :error="snackbar.context === 'error'"
-      v-model="snackbar.active"
-      class="mt-2"
-    >
-      {{ snackbar.message }}
-      <v-btn dark flat @click.native="snackbar.active = false">Close</v-btn>
-    </v-snackbar>
     <v-dialog v-model="dialog" persistent width="500px">
       <v-card v-if="pickedBook">
         <v-card-title class="headline">Request to borrow "{{ pickedBook.title }}" ?</v-card-title>
@@ -62,7 +52,7 @@ export default {
   },
   computed: {
     books () {
-      return this.$store.state.books.books
+      return this.$store.getters.allBooks
     },
     filteredBooks () {
       if (this.searchKeyword.trim().length < 3) return this.books
@@ -85,10 +75,10 @@ export default {
   methods: {
     openBorrowDialog (book) {
       if (!this.authenticated) {
-        this.snackbar.context = 'error'
-        this.snackbar.message = 'You must be logged in.'
-        this.snackbar.active = true
-        return
+        return this.$store.commit('activateSnackbar', {
+          message: 'You must be logged in.',
+          context: 'error'
+        })
       }
       this.pickedBook = book
       this.dialog = true
