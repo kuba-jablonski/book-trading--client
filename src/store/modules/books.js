@@ -14,10 +14,9 @@ export default {
     }
   },
   getters: {
-    userBooks (state, getters, rootState) {
-      if (rootState.user) {
-        return state.books.filter(book => book.owner === rootState.user._id)
-      }
+    userBooks (state, getters) {
+      console.log(getters)
+      return state.books.filter(book => book.owner === getters.uid)
     }
   }
 }
