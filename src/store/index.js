@@ -1,13 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import books from './modules/books'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     user: null,
-    authToken: null,
-    books: []
+    authToken: null
   },
   mutations: {
     setUser (state, payload) {
@@ -15,15 +16,6 @@ export default new Vuex.Store({
     },
     setAuthToken (state, payload) {
       state.authToken = payload
-    },
-    addBook (state, payload) {
-      state.books.unshift(payload)
-    },
-    setBooks (state, payload) {
-      state.books = payload
-    },
-    removeBook (state, { _id }) {
-      state.books = state.books.filter(book => book._id !== _id)
     }
   },
   getters: {
@@ -35,11 +27,7 @@ export default new Vuex.Store({
     },
     authenticated (state) {
       return !!state.user
-    },
-    userBooks (state) {
-      if (state.user) {
-        return state.books.filter(book => book.owner === state.user._id)
-      }
     }
-  }
+  },
+  modules: { books }
 })

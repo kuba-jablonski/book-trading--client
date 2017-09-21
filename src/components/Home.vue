@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     books () {
-      return this.$store.state.books
+      return this.$store.state.books.books
     },
     filteredBooks () {
       if (this.searchKeyword.trim().length < 3) return this.books
