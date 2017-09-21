@@ -51,16 +51,6 @@
             </v-form>
           </v-container>
         </v-card-text>
-        <v-snackbar
-          :timeout="5000"
-          top
-          right
-          error
-          v-model="error"
-        >
-          {{ errorMessage }}
-          <v-btn dark flat @click.native="error = false">Close</v-btn>
-        </v-snackbar>
       </v-card>
     </v-flex>
   </v-layout>
