@@ -5,23 +5,17 @@ export default {
     authToken: null
   },
   mutations: {
-    setUser (state, payload) {
+    setUser: (state, payload) => {
       state.username = payload.username
       state._id = payload._id
     },
-    setAuthToken (state, payload) {
+    setAuthToken: (state, payload) => {
       state.authToken = payload
     }
   },
   getters: {
-    username (state) {
-      return state.username
-    },
-    uid (state) {
-      return state._id
-    },
-    authenticated (state) {
-      return !!state.authToken
-    }
+    username: state => state.username,
+    uid: state => state._id,
+    authenticated: state => !!state.authToken
   }
 }
