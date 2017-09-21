@@ -17,8 +17,16 @@ export default {
   },
   actions: {
     fetchBooks: async ({ commit }) => {
-      const { data: { books } } = await server.get('/books/all')
-      commit('setBooks', books)
+      try {
+        const { data: { books } } = await server.get('/books/all')
+        commit('setBooks', books)
+      } catch (error) {
+        commit('activateSnackbar', {
+          message: 'Couldn\'t connect to the server',
+          context: 'error',
+          timeout: 0
+        })
+      }
     }
   },
   getters: {

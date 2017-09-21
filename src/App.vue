@@ -28,6 +28,7 @@
       :success="snackbar.context === 'success'"
       :error="snackbar.context === 'error'"
       v-model="snackbar.active"
+      class="mt-2"
     >
       {{ snackbar.message }}
       <v-btn dark flat @click.native="$store.commit('deactivateSnackbar')">{{ snackbar.button }}</v-btn>
@@ -59,11 +60,7 @@ export default {
     appNavigation: Navigation
   },
   mounted () {
-    try {
-      this.$store.dispatch('fetchBooks')
-    } catch (error) {
-      console.log(error)
-    }
+    this.$store.dispatch('fetchBooks')
   }
 }
 </script>
