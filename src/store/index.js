@@ -7,5 +7,24 @@ import books from './modules/books'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  state: {
+    snackbar: {
+      timeout: 0,
+      context: '',
+      active: false,
+      button: ''
+    }
+  },
+  mutations: {
+    activateSnackbar: (state, { message, context, timeout = 5000, button = 'Close', active = true }) => {
+      state.snackbar = { message, context, timeout, button, active }
+    },
+    deactivateSnackbar: state => {
+      state.snackbar.active = false
+    }
+  },
+  getters: {
+    snackbar: state => state.snackbar
+  },
   modules: { user, books }
 })

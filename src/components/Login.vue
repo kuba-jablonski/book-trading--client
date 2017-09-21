@@ -52,15 +52,6 @@
             </v-form>
           </v-container>
         </v-card-text>
-        <v-snackbar
-          :timeout="5000"
-          top
-          error
-          v-model="error"
-        >
-          Wrong username or password!
-          <v-btn dark flat @click.native="error = false">Close</v-btn>
-        </v-snackbar>
       </v-card>
     </v-flex>
   </v-layout>
@@ -99,7 +90,10 @@ export default {
         this.$router.push('/')
       } catch (error) {
         this.loading = false
-        this.error = true
+        this.$store.commit('activateSnackbar', {
+          message: 'Wrong username or password!',
+          context: 'error'
+        })
       }
     }
   }

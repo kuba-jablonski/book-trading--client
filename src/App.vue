@@ -22,6 +22,16 @@
     <v-footer class="primary">
       <span class="white--text">© 2017</span>
     </v-footer>
+    <v-snackbar
+      :timeout="snackbar.timeout"
+      top
+      :success="snackbar.context === 'success'"
+      :error="snackbar.context === 'error'"
+      v-model="snackbar.active"
+    >
+      {{ snackbar.message }}
+      <v-btn dark flat @click.native="$store.commit('deactivateSnackbar')">{{ snackbar.button }}</v-btn>
+    </v-snackbar>    
   </v-app>
 </template>
 
@@ -40,6 +50,9 @@ export default {
     },
     authenticated () {
       return this.$store.getters.authenticated
+    },
+    snackbar () {
+      return this.$store.getters.snackbar
     }
   },
   components: {
