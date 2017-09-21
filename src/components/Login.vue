@@ -72,8 +72,7 @@ export default {
         (v) => !!v || 'Password is required',
         (v) => v.length >= 6 || 'Password must be at least 6 characters long'
       ],
-      loading: false,
-      error: false
+      loading: false
     }
   },
   methods: {

@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import server from '@/axios'
-
 export default {
   data () {
     return {
@@ -83,9 +81,7 @@ export default {
         (v) => !!v || 'Password is required',
         (v) => v.length >= 6 || 'Password must be at least 6 characters long'
       ],
-      loading: false,
-      error: false,
-      errorMessage: ''
+      loading: false
     }
   },
   methods: {
@@ -93,26 +89,28 @@ export default {
       try {
         this.loading = true
 
-        const { data: user, headers } = await server.post('/users/signup', {
+        await this.$store.dispatch('signUp', {
           username: this.username,
           password: this.password
         })
-        this.$store.commit('setUser', user)
-        this.$store.commit('setAuthToken', headers.authorization)
 
         this.loading = false
         this.$router.push('/')
       } catch (error) {
-        console.log(error.response)
         this.loading = false
-        this.error = true
-        if (error.response && (error.response.data.code === 11000)) {
-          this.errorMessage = 'This username already exists.'
-        } else {
-          this.errorMessage = 'Something went wrong.'
-        }
+
+        const errorMessage = this.pickErrorMessage(error)
+
+        this.$store.commit('activateSnackbar', {
+          message: errorMessage,
+          context: 'error'
+        })
       }
-    }
+    },
+    pickErrorMessage: error =>
+      error.response && (error.response.data.code === 11000)
+        ? 'This username already exists.'
+        : 'Something went wrong.'
   }
 }
 </script>

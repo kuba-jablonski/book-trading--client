@@ -20,6 +20,11 @@ export default {
       const { data: user, headers } = await server.post('/users/login', payload)
       commit('setUser', user)
       commit('setAuthToken', headers.authorization)
+    },
+    signUp: async ({ commit }, payload) => {
+      const { data: user, headers } = await server.post('/users/signup', payload)
+      commit('setUser', user)
+      commit('setAuthToken', headers.authorization)
     }
   },
   getters: {
