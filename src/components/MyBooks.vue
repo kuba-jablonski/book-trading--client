@@ -61,18 +61,14 @@ export default {
       try {
         if (!this.removeEnabled) return
 
-        await server({
-          method: 'delete',
-          url: '/books/remove',
-          headers: { 'Authorization': this.$store.state.authToken },
-          data: book
-        })
-
-        this.$store.commit('removeBook', book)
+        await this.$store.dispatch('removeBook', book)
 
         this.snackbar.active = false
       } catch (error) {
-        console.log(error.response)
+        this.$store.commit('activateSnackbar', {
+          message: 'Unable to remove the book.',
+          context: 'error'
+        })
       }
     }
   }

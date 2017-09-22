@@ -40,6 +40,15 @@ export default {
         }
       })
       commit('addBook', book)
+    },
+    removeBook: async ({ commit, getters }, payload) => {
+      await server({
+        method: 'delete',
+        url: '/books/remove',
+        headers: { 'Authorization': getters.authToken },
+        data: payload
+      })
+      commit('removeBook', payload)
     }
   },
   getters: {
