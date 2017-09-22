@@ -59,15 +59,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { debounce } from 'lodash'
+
+import { searchBooks } from '@/services/bookApi'
 
 export default {
   data () {
     return {
       searchKeyword: '',
       books: [],
-      APIURL: 'https://www.googleapis.com/books/v1/volumes?key=AIzaSyBbI3lL95nvzfZ6SV3IBQcKOJR2fVdH0sk&langRestrict=en&q=',
       dialog: false,
       pickedBook: {
         info: null,
@@ -83,8 +83,7 @@ export default {
       try {
         if (this.searchKeyword.length > 2) {
           this.loading = true
-          const { data: { items } } = await axios.get(`${this.APIURL}${this.searchKeyword}`)
-          this.books = items
+          this.books = await searchBooks(this.searchKeyword)
           this.loading = false
         }
       } catch (error) {
