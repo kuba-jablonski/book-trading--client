@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import authStateWatcher from '@/mixins/authStateWatcher'
+
 export default {
   data () {
     return {
@@ -70,7 +72,8 @@ export default {
         })
       }
     }
-  }
+  },
+  mixins: [authStateWatcher]
 }
 </script>
 

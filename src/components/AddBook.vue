@@ -52,6 +52,7 @@
 import { debounce } from 'lodash'
 
 import { searchBooks } from '@/services/bookApi'
+import authStateWatcher from '@/mixins/authStateWatcher'
 
 export default {
   data () {
@@ -110,6 +111,7 @@ export default {
         })
       }
     }
-  }
+  },
+  mixins: [authStateWatcher]
 }
 </script>
