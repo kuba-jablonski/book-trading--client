@@ -41,11 +41,6 @@ export default {
   data () {
     return {
       searchKeyword: '',
-      snackbar: {
-        active: false,
-        context: '',
-        message: ''
-      },
       dialog: false,
       pickedBook: null
     }

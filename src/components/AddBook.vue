@@ -23,7 +23,9 @@
           >
             <v-list-tile-content>
               <v-list-tile-title>{{ book.volumeInfo.title }}</v-list-tile-title>
-              <v-list-tile-sub-title>{{ getAuthor(book) }}</v-list-tile-sub-title>
+              <v-list-tile-sub-title>
+                {{ book.volumeInfo.authors ? book.volumeInfo.authors[0] : 'Unknown' }}
+              </v-list-tile-sub-title>
             </v-list-tile-content>
             <v-list-tile-action>
               <v-icon class="white--text">add_circle</v-icon>
@@ -58,7 +60,6 @@
 
 <script>
 import axios from 'axios'
-import server from '@/axios'
 import { debounce } from 'lodash'
 
 export default {
@@ -87,7 +88,10 @@ export default {
           this.loading = false
         }
       } catch (error) {
-        console.log(error)
+        this.$store.commit('activateSnackbar', {
+          message: 'Error connecting to book API',
+          context: 'error'
+        })
       }
     }, 500),
     pickBook (i) {
@@ -95,32 +99,25 @@ export default {
       this.dialog = true
     },
     async saveBook () {
-      this.saveInProgress = true
-      const pickedBook = this.pickedBook.info
+      try {
+        this.saveInProgress = true
+        const pickedBook = this.pickedBook.info.volumeInfo
 
-      const bookToSave = {
-        title: pickedBook.volumeInfo.title,
-        author: this.getAuthor(pickedBook),
-        image: pickedBook.volumeInfo.imageLinks.thumbnail
+        await this.$store.dispatch('saveBook', pickedBook)
+
+        this.books.splice(this.pickedBook.index, 1)
+
+        this.saveInProgress = false
+        this.dialog = false
+        this.bookSaved = true
+      } catch (error) {
+        this.saveInProgress = false
+        this.dialog = false
+        this.$store.commit('activateSnackbar', {
+          message: 'Unable to save book.',
+          context: 'error'
+        })
       }
-
-      const { data: book } = await server({
-        method: 'post',
-        url: '/books/add',
-        headers: { 'Authorization': this.$store.state.authToken },
-        data: bookToSave
-      })
-
-      this.$store.commit('addBook', book)
-
-      this.books.splice(this.pickedBook.index, 1)
-
-      this.saveInProgress = false
-      this.dialog = false
-      this.bookSaved = true
-    },
-    getAuthor (book) {
-      return book.volumeInfo.authors ? book.volumeInfo.authors[0] : 'Unknown'
     }
   }
 }

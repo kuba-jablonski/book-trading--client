@@ -30,6 +30,7 @@ export default {
   getters: {
     username: state => state.username,
     uid: state => state._id,
-    authenticated: state => !!state.authToken
+    authenticated: state => !!state.authToken,
+    authToken: state => state.authToken
   }
 }

@@ -27,6 +27,19 @@ export default {
           timeout: 0
         })
       }
+    },
+    saveBook: async ({ commit, getters }, payload) => {
+      const { data: book } = await server({
+        method: 'post',
+        url: '/books/add',
+        headers: { 'Authorization': getters.authToken },
+        data: {
+          title: payload.title,
+          author: payload.authors ? payload.authors[0] : 'Unknown',
+          image: payload.imageLinks.thumbnail
+        }
+      })
+      commit('addBook', book)
     }
   },
   getters: {
