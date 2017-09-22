@@ -13,6 +13,7 @@
           :src="book.image"
           alt="Book Image"
           class="mr-2 ml-2 mt-2 mb-2"
+          :class="{'removable': removeEnabled}"
         >
       </v-flex>
     </v-layout>
@@ -30,8 +31,6 @@
 </template>
 
 <script>
-import server from '@/axios'
-
 export default {
   data () {
     return {
@@ -74,3 +73,12 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+img
+  transition box-shadow 0.2s linear
+
+.removable:hover
+  box-shadow: 0px 3px 15px rgba(#000, 0.5)
+  cursor: pointer
+</style>
