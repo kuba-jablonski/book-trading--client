@@ -45,16 +45,6 @@
         </v-card>
       </v-dialog>
     </v-layout>
-    <v-snackbar
-      :timeout="3000"
-      class="mt-1"
-      top
-      success
-      v-model="bookSaved"
-    >
-      Book was added to your collection.
-      <v-btn dark flat @click.native="bookSaved = false">Close</v-btn>
-    </v-snackbar> 
   </div>
 </template>
 
@@ -73,7 +63,6 @@ export default {
         info: null,
         index: null
       },
-      bookSaved: false,
       loading: false,
       saveInProgress: false
     }
@@ -108,7 +97,10 @@ export default {
 
         this.saveInProgress = false
         this.dialog = false
-        this.bookSaved = true
+        this.$store.commit('activateSnackbar', {
+          message: 'Book was added to your collection',
+          context: 'success'
+        })
       } catch (error) {
         this.saveInProgress = false
         this.dialog = false
