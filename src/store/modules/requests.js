@@ -40,5 +40,13 @@ export default {
       })
       commit('setRequests', requests)
     }
+  },
+  getters: {
+    incomingRequests: (state, getters) => {
+      return state.requests.filter(request => request.to._id === getters.uid)
+    },
+    outgoingRequests: (state, getters) => {
+      return state.requests.filter(request => request.from._id === getters.uid)
+    }
   }
 }
