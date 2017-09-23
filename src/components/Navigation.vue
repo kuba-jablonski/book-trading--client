@@ -50,7 +50,8 @@ export default {
         bookItems = [
           { title: 'Browse Books', path: '/', icon: 'home', visible: true },
           { title: 'My Books', path: '/books/me', icon: 'library_books' },
-          { title: 'Add a Book', path: '/books/add', icon: 'library_add' }
+          { title: 'Add a Book', path: '/books/add', icon: 'library_add' },
+          { title: 'Requests', path: '/requests/me', icon: 'library_add' }
         ]
       }
       return bookItems

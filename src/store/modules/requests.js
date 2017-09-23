@@ -31,6 +31,14 @@ export default {
         message: 'Request sent!',
         context: 'success'
       })
+    },
+    fetchRequests: async ({ commit, getters }) => {
+      const { data: requests } = await server({
+        method: 'get',
+        url: '/requests/me',
+        headers: { 'Authorization': getters.authToken }
+      })
+      commit('setRequests', requests)
     }
   }
 }
