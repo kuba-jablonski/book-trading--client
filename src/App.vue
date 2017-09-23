@@ -64,14 +64,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus" scoped>
-@require '../node_modules/vuetify/src/stylus/settings/_colors'
-
-.icon
-  transition: color 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
-  transition-delay: 0.3s
-
-.list__tile--active .icon
-  color: $blue.darken-2
-</style>
