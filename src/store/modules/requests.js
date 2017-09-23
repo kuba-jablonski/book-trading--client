@@ -17,7 +17,8 @@ export default {
         headers: { 'Authorization': getters.authToken },
         data: {
           to: {
-            _id: payload.owner
+            username: payload.ownerUsername,
+            _id: payload.ownerId
           },
           from: {
             username: getters.username,
