@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import user from './modules/user'
 import books from './modules/books'
+import requests from './modules/requests'
 
 Vue.use(Vuex)
 
@@ -26,5 +27,5 @@ export default new Vuex.Store({
   getters: {
     snackbar: state => state.snackbar
   },
-  modules: { user, books }
+  modules: { user, books, requests }
 })

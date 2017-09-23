@@ -28,7 +28,7 @@
       <v-card v-if="pickedBook">
         <v-card-title class="headline">Request to borrow "{{ pickedBook.title }}" ?</v-card-title>
         <v-card-actions>
-          <v-btn class="green--text darken-1" flat="flat" @click.native="borrowBook">Yes</v-btn>
+          <v-btn :loading="loading" class="green--text darken-1" flat="flat" @click.native="sendRequest">Yes</v-btn>
           <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
         </v-card-actions>         
       </v-card>
@@ -42,7 +42,8 @@ export default {
     return {
       searchKeyword: '',
       dialog: false,
-      pickedBook: null
+      pickedBook: null,
+      loading: false
     }
   },
   computed: {
@@ -78,8 +79,20 @@ export default {
       this.pickedBook = book
       this.dialog = true
     },
-    borrowBook () {
-      // !!!
+    async sendRequest () {
+      try {
+        this.loading = true
+        await this.$store.dispatch('makeRequest', this.pickedBook)
+        this.loading = false
+        this.dialog = false
+      } catch (error) {
+        this.$store.commit('activateSnackbar', {
+          message: 'Something want wrong',
+          context: 'error'
+        })
+        this.loading = false
+        this.dialog = false
+      }
     }
   }
 }
