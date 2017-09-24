@@ -17,7 +17,7 @@
           <v-icon>account_circle</v-icon>
         </v-avatar>
         {{ username }}
-        </v-chip>
+      </v-chip>
     </v-toolbar>
     <main>
       <v-container fluid>
