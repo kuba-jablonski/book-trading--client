@@ -2,7 +2,7 @@
   <v-layout row>
     <v-flex sm6 offset-sm3>
       <v-card>
-        <v-toolbar class="accent" dark>
+        <v-toolbar class="primary" dark>
           <v-toolbar-title>Requests</v-toolbar-title>
         </v-toolbar>
         <v-list>

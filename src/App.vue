@@ -12,7 +12,12 @@
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Book Trading Club</v-toolbar-title>
       <v-spacer></v-spacer>
-      <p v-if="authenticated && !$vuetify.breakpoint.xs" class="mb-0">Logged in as {{ username }}.</p>
+      <v-chip v-if="authenticated" class="accent white--text">
+        <v-avatar>
+          <v-icon>account_circle</v-icon>
+        </v-avatar>
+        {{ username }}
+        </v-chip>
     </v-toolbar>
     <main>
       <v-container fluid>
