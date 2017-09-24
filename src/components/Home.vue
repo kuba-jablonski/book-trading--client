@@ -86,8 +86,9 @@ export default {
         this.loading = false
         this.dialog = false
       } catch (error) {
+        console.log(error.response)
         this.$store.commit('activateSnackbar', {
-          message: 'Something want wrong',
+          message: error.response.data.message,
           context: 'error'
         })
         this.loading = false
