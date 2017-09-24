@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import authStateWatcher from '@/mixins/authStateWatcher'
+
 export default {
   computed: {
     incomingRequests () {
@@ -43,6 +45,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('fetchRequests')
-  }
+  },
+  mixins: [authStateWatcher]
 }
 </script>
