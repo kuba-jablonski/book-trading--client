@@ -54,6 +54,7 @@ export default {
   getters: {
     allBooks: state => state.books,
     userBooks: (state, getters) => state.books.filter(book => book.ownerId === getters.uid),
+    otherBooks: (state, getters) => state.books.filter(book => book.ownerId !== getters.uid),
     bookTitleById: state => id => state.books.find(book => book._id === id).title
   }
 }

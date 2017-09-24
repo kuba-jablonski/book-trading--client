@@ -48,7 +48,7 @@ export default {
   },
   computed: {
     books () {
-      return this.$store.getters.allBooks
+      return this.$store.getters.otherBooks
     },
     filteredBooks () {
       if (this.searchKeyword.trim().length < 3) return this.books
