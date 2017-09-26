@@ -4,8 +4,11 @@
       <v-btn to="/books/add" raised success class="mr-5">add</v-btn>
       <v-btn @click="enableRemove" raised error>remove</v-btn>
     </v-layout>
-    <v-layout>
-      <v-flex wrap class="text-xs-center">
+    <v-layout row>
+      <v-flex v-if="books.length === 0">
+        <p class="text-xs-center body-2">Your collection in empty. Please add a book.</p>
+      </v-flex>
+      <v-flex v-else wrap class="text-xs-center">
         <img
           v-for="book in books"
           @click="removeBook(book)"

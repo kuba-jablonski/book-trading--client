@@ -53,6 +53,15 @@ export default {
       commit('removeBook', book)
       commit('addBook', book)
       commit('removeRequest', payload)
+    },
+    declineRequest: async ({ commit, getters }, payload) => {
+      await server({
+        method: 'delete',
+        url: '/requests/decline',
+        headers: { 'Authorization': getters.authToken },
+        data: payload
+      })
+      commit('removeRequest', payload)
     }
   },
   getters: {

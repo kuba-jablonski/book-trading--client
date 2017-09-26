@@ -26,7 +26,8 @@
     </v-layout>
     <v-dialog v-model="dialog" persistent width="500px">
       <v-card v-if="pickedBook">
-        <v-card-title class="headline">Request to borrow "{{ pickedBook.title }}" ?</v-card-title>
+        <v-card-title class="headline primary--text">Borrow book</v-card-title>
+        <v-card-text>Send request to borrow "{{ pickedBook.title }}" from {{ pickedBook.ownerUsername }}?</v-card-text>
         <v-card-actions>
           <v-btn :loading="loading" class="green--text darken-1" flat="flat" @click.native="sendRequest">Yes</v-btn>
           <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>

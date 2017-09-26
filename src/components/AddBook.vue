@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row>
-      <v-flex sm6 offset-sm3>
+      <v-flex xs12 sm10 offset-sm1 md6 offset-md3>
         <v-text-field
           label="Search for a book"
           prepend-icon="search"
@@ -37,7 +37,8 @@
     <v-layout row justify-center>
       <v-dialog v-model="dialog" persistent width="500px">
         <v-card v-if="pickedBook.info">
-          <v-card-title class="headline">Add "{{ pickedBook.info.volumeInfo.title }}" to your collection?</v-card-title>
+          <v-card-title class="headline primary--text">Add book</v-card-title>
+          <v-card-text>Add "{{ pickedBook.info.volumeInfo.title }}" to your collection?</v-card-text>
           <v-card-actions>
             <v-btn class="green--text darken-1" :loading="saveInProgress" flat="flat" @click.native="saveBook">Yes</v-btn>
             <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
