@@ -7,6 +7,9 @@ export default {
   mutations: {
     setRequests: (state, payload) => {
       state.requests = payload
+    },
+    removeRequest: (state, { _id }) => {
+      state.requests = state.requests.filter(request => request._id !== _id)
     }
   },
   actions: {
@@ -39,6 +42,17 @@ export default {
         headers: { 'Authorization': getters.authToken }
       })
       commit('setRequests', requests)
+    },
+    acceptRequest: async ({ commit, getters }, payload) => {
+      const { data: book } = await server({
+        method: 'post',
+        url: '/requests/accept',
+        headers: { 'Authorization': getters.authToken },
+        data: payload
+      })
+      commit('removeBook', book)
+      commit('addBook', book)
+      commit('removeRequest', payload)
     }
   },
   getters: {

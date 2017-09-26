@@ -37,8 +37,8 @@
           {{ this.request.from.username }} wants to borrow "{{ $store.getters.bookTitleById(this.request.book) }}". Accept?
           </v-card-text>
           <v-card-actions>
-            <v-btn class="green--text darken-1" flat="flat" @click.native="acceptRequest">Yes</v-btn>
-            <v-btn class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
+            <v-btn :loading="acceptInProgress" class="green--text darken-1" flat="flat" @click.native="acceptRequest">Yes</v-btn>
+            <v-btn :loading="declineInProgress" class="red--text darken-1" flat="flat" @click.native="dialog = false">No</v-btn>
           </v-card-actions>         
         </v-card>
       </v-dialog>
@@ -55,7 +55,9 @@ export default {
   data () {
     return {
       dialog: false,
-      request: null
+      request: null,
+      acceptInProgress: false,
+      declineInProgress: false
     }
   },
   computed: {
@@ -71,8 +73,24 @@ export default {
       this.request = request
       this.dialog = true
     },
-    acceptRequest () {
-      // !!!
+    async acceptRequest () {
+      try {
+        this.acceptInProgress = true
+        await this.$store.dispatch('acceptRequest', this.request)
+        this.acceptInProgress = false
+        this.dialog = false
+        this.$store.commit('activateSnackbar', {
+          message: 'Request accepted!',
+          context: 'success'
+        })
+      } catch (error) {
+        this.acceptInProgress = false
+        this.dialog = false
+        this.$store.commit('activateSnackbar', {
+          message: 'Something went wrong',
+          context: 'error'
+        })
+      }
     }
   },
   filters: {
