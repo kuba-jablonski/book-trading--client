@@ -61,11 +61,6 @@ export default {
     },
     authenticated () {
       return this.$store.getters.authenticated
-    },
-    headingText () {
-      return this.authenticated
-        ? 'Pick a book you\'d like to borrow.'
-        : 'Log in to be able to borrow books.'
     }
   },
   methods: {
@@ -86,7 +81,6 @@ export default {
         this.loading = false
         this.dialog = false
       } catch (error) {
-        console.log(error.response)
         this.$store.commit('activateSnackbar', {
           message: error.response.data.message,
           context: 'error'

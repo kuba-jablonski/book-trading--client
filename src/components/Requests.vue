@@ -6,13 +6,14 @@
           <v-toolbar class="primary" dark>
             <v-toolbar-title>Requests</v-toolbar-title>
           </v-toolbar>
-          <v-list>
+          <v-list two-line>
             <v-subheader>Incoming</v-subheader>
             <v-list-tile @click="checkRequestDetails(request)" v-for="request in incomingRequests" :key="request._id">
               <v-list-tile-content>
                 <v-list-tile-title>
                   {{ request.from.username }} wants to borrow "{{ $store.getters.bookTitleById(request.book) }}".
                 </v-list-tile-title>
+                <v-list-tile-sub-title>{{ request.createdAt | formatDate }}</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>
             <v-subheader>Outgoing</v-subheader>
@@ -21,6 +22,7 @@
                 <v-list-tile-title>
                   Requested to borrow "{{ $store.getters.bookTitleById(request.book) }}" from {{ request.to.username }}.
                 </v-list-tile-title>
+                <v-list-tile-sub-title>{{ request.createdAt | formatDate }}</v-list-tile-sub-title>
               </v-list-tile-content>
             </v-list-tile>            
           </v-list>
@@ -45,6 +47,8 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 import authStateWatcher from '@/mixins/authStateWatcher'
 
 export default {
@@ -70,6 +74,9 @@ export default {
     acceptRequest () {
       // !!!
     }
+  },
+  filters: {
+    formatDate: val => moment(val).format('MMMM Do YYYY, h:mm a')
   },
   mounted () {
     this.$store.dispatch('fetchRequests')
