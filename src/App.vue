@@ -25,7 +25,9 @@
       </v-container>
     </main>
     <v-footer class="primary">
-      <span class="white--text">© 2017</span>
+      <span class="white--text">
+        <span id="symbol">&#9997;</span> Made by Jakub Jabloński
+      </span>
     </v-footer>
     <v-snackbar
       :timeout="snackbar.timeout"
@@ -69,3 +71,8 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+#symbol
+  font-size: 20px
+</style>
